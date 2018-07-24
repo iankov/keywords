@@ -1,0 +1,24 @@
+{
+    "name": "iankov/keywords",
+    "description": "Automatic keywords out of given text",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Dmitriy Yankov",
+            "email": "incoming@ukr.net"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Iankov\\Keywords\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Iankov\\Keywords\\ServiceProvider"
+            ]
+        }
+    }
+}
