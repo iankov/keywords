@@ -13,12 +13,5 @@
         "psr-4": {
             "Iankov\\Keywords\\": "src/"
         }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Iankov\\Keywords\\ServiceProvider"
-            ]
-        }
     }
 }

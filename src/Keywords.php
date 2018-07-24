@@ -55,7 +55,7 @@ class Keywords
      * Get or set config parameters
      *
      * @param array $cfg
-     * @return array
+     * @return mixed
      */
     public function config($cfg = [])
     {
@@ -63,7 +63,9 @@ class Keywords
             return $this->config;
         }
 
-        return $this->config = array_merge($this->config, $cfg);
+        $this->config = array_merge($this->config, $cfg);
+
+        return $this;
     }
 
     /**
@@ -78,7 +80,7 @@ class Keywords
 
         $this->content = $text;
 
-        return null;
+        return $this;
     }
 
     /**
@@ -101,7 +103,7 @@ class Keywords
      * @param string $delimiter
      * @return string
      */
-    public function string($delimiter = ', ', $limit = null)
+    public function string($limit = null, $delimiter = ', ')
     {
         $words = $this->get()->sortByDesc('count')->take($limit)->pluck('word')->all();
         return implode($delimiter, $words);
@@ -111,30 +113,33 @@ class Keywords
      * Add a word to ignore
      *
      * @param mixed $word
+     * @return $this
      */
     public function ignoreWord($word)
     {
-        $this->ignore($word, 'words');
+        return $this->ignore($word, 'words');
     }
 
     /**
      * Add a symbol to ignore
      *
      * @param mixed $symbol
+     * @return $this
      */
     public function ignoreSymbol($symbol)
     {
-        $this->ignore($symbol, 'symbols');
+        return $this->ignore($symbol, 'symbols');
     }
 
     /**
      * Add a regular expression to ignore
      *
      * @param mixed $regex
+     * @return $this
      */
     public function ignoreRegex($regex)
     {
-        $this->ignore($regex, 'regex');
+        return $this->ignore($regex, 'regex');
     }
 
     /**
@@ -142,6 +147,7 @@ class Keywords
      *
      * @param array $items
      * @param string $type
+     * @return $this
      */
     public function ignore($items, $type = 'words')
     {
@@ -154,6 +160,8 @@ class Keywords
         }
 
         $this->ignore[$type] = array_merge($ignored, $items);
+
+        return $this;
     }
 
     /**
@@ -161,6 +169,7 @@ class Keywords
      *
      * @param string $pattern
      * @param string $replacement
+     * @return $this
      */
     public function replace($pattern, $replacement)
     {
@@ -176,12 +185,14 @@ class Keywords
         } else {
             $this->replace = array_merge($this->replace, [$pattern => $replacement]);
         }
+
+        return $this;
     }
 
     /**
      * Generate keywords
      *
-     * @return void
+     * @return $this
      */
     function generate()
     {
@@ -225,6 +236,9 @@ class Keywords
         foreach($occurance as $keyword => $count){
             $keywords[] = ['word' => $keyword, 'count' => $count];
         }
+
         $this->keywords = collect($keywords);
+
+        return $this;
     }
 }
